@@ -1,0 +1,27 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Daniel Zhou",
+  "license": "ISC",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "NODE_ENV=production node server.js",
+    "test": "export NODE_ENV=test || set \"NODE_ENV=test\" &&  mocha  **/*.test.js",
+    "test-watch": "nodemon --exec 'npm test'"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.15.4",
+    "lodash": "^4.17.4",
+    "pg": "^7.4.1",
+    "save-dev": "^2.0.0"
+  },
+  "devDependencies": {
+    "expect": "^22.0.6",
+    "mocha": "^4.1.0",
+    "nodemon": "^1.14.11",
+    "supertest": "^3.0.0"
+  }
+}
