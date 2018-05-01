@@ -5,7 +5,7 @@ module.exports = (app) => {
     app.get("/clients", (req, res) => {
         clientsBL.getAllClients().then(result => {
             res.status(200).send(result);
-        })
+        });
     })
 
     app.post("/clients/add", (req, res) => {

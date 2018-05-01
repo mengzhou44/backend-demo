@@ -1,27 +1,10 @@
-const { Pool } = require("pg");
-const _ = require("lodash");
+const { Pool } = require('pg');
+const _ = require('lodash');
+const keys = require('../config/keys');
 
-const env = process.env.NODE_ENV || "development";
-
-const pool = getPool();
-
-function getPool() {
-    if (env === "test") {
-        return new Pool({
-            user: "postgres",
-            database: "gems_smartmats_test",
-            server: "localhost",
-            password: "Aa1197344",
-            port: 5432
-        });
-    }
-
+const pool = () => {
     return new Pool({
-        user: "postgres",
-        database: "gems_smartmats_qa",
-        server: "localhost",
-        password: "Aa1197344",
-        port: 5432
+        connectionString: keys.connectionString
     });
 }
 
@@ -44,14 +27,14 @@ async function executeInTransaction(callback) {
     const client = await pool.connect();
     try {
 
-        await client.query("BEGIN");
+        await client.query('BEGIN');
 
         await callback(client);
 
-        await client.query("COMMIT");
+        await client.query('COMMIT');
 
     } catch (error) {
-        await client.query("ROLLBACK");
+        await client.query('ROLLBACK');
         throw new Error('Error occurred!');
     }
     finally {

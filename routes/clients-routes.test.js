@@ -50,14 +50,12 @@ describe("Clients", () => {
             request(app)
                 .get("/clients")
                 .end((err, res) => {
-                    if (err) {
-                        return done(err);
-                    }
-                    done();
                     expect(res.body.length).toBe(2);
+                    done();
                 });
         })
     });
+
 
     describe("POST /clients/add", () => {
         it("should be able to add client", (done) => {
@@ -65,22 +63,30 @@ describe("Clients", () => {
                 .post("/clients/add")
                 .send({ name: "Simon", company: "345454 alberta ltd." })
                 .end((err, res) => {
-                    if (err) {
-                        return done(err);
-                    }
 
-                    if (res.error) {
-                        console.log(JSON.stringify(res.error, null, 4));
-                        return done(res.error);
-                    }
                     clientsBL.getClientById(res.body.id)
                         .then((result) => {
-                            done();
                             expect(result).not.toBe(null);
-
+                            done();
                         }).catch(err => {
                             done(err);
                         })
+                });
+        })
+    });
+
+    describe("POST /clients/remove", () => {
+        it("should be able to remove client", (done) => {
+            request(app)
+                .post("/clients/remove")
+                .send({ id: clients[0].id })
+                .end((err, res) => {
+                    clientsBL.getAllClients().then((result) => {
+                        expect(result.length).toBe(1);
+                        done();
+                    }).catch(err => {
+                        done(err);
+                    })
                 });
         })
     });
@@ -93,39 +99,9 @@ describe("Clients", () => {
                 .post("/clients/update")
                 .send(client)
                 .end((err, res) => {
-                    if (err) {
-                        return done(err);
-                    }
-
-                    if (res.error) {
-                        return done(res.error);
-                    }
                     clientsBL.getClientById(client.id).then((result) => {
-                        done();
                         expect(result[0].company).toBe("new name");
-                    }).catch(err => {
-                        done(err);
-                    })
-                });
-        })
-    });
-
-    describe("POST /clients/remove", () => {
-        it("should be able to remove client", (done) => {
-            request(app)
-                .post("/clients/remove")
-                .send({ id: clients[0].id })
-                .end((err, res) => {
-                    if (err) {
-                        return done(err);
-                    }
-                    if (res.error) {
-                        console.log("error", res.error);
-                        return done(res.error);
-                    }
-                    clientsBL.getAllClients().then((result) => {
                         done();
-                        expect(result.length).toBe(1);
                     }).catch(err => {
                         done(err);
                     })
@@ -136,6 +112,7 @@ describe("Clients", () => {
 
 
 });
+
 
 
 

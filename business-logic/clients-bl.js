@@ -2,7 +2,7 @@ const db = require('../db');
 
 const getAllClients = () => {
     return db.execute({
-        text: "SELECT * FROM clients"
+        text: `SELECT * FROM clients`
     });
 }
 
@@ -13,7 +13,6 @@ const getClientById = (id) => {
     };
     return db.execute(query);
 }
-
 
 const addClient = ({ name, company }) => {
     const query = {
