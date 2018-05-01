@@ -6,11 +6,21 @@ const getUserById = (id) => {
         text: "SELECT * FROM users WHERE id = $1",
         values: [id]
     };
-    return db.execute(query);
+    return db.selectOne(query);
 }
 
+const getUserByEmail = (email) => {
+    const query = {
+        text: "SELECT * FROM users WHERE email = $1",
+        values: [id]
+    };
+    return db.selectOne(query);
+}
+
+
 module.exports = {
-    getUserById
+    getUserById,
+    getUserByEmail
 }
 
 
