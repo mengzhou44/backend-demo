@@ -1,8 +1,10 @@
 const _ = require('lodash');
 const clientsBL = require('../business-logic/clients-bl');
+const requireAuth = require('../middleware/require-auth');
 
 module.exports = (app) => {
-    app.get("/clients", (req, res) => {
+    app.get("/clients", requireAuth(), (req, res) => {
+        console.log('step1');
         clientsBL.getAllClients().then(result => {
             res.status(200).send(result);
         });

@@ -2,9 +2,6 @@ var jwt = require('jsonwebtoken');
 const _ = require('lodash');
 var CryptoJS = require('crypto-js');
 
-const mongoose = require('mongoose');
-
-
 const keys = require('../config/keys.js');
 const usersBL = require('../business-logic/users-bl');
 
@@ -21,7 +18,9 @@ module.exports = app => {
             if (ciphertext !== req.body.verificationCode) {
                 res.sendStatus(401);
             } else {
+
                 var found = await usersBL.getUserByEmail(req.body.email);
+
                 if (!found) {
                     found = await usersBL.addUser({
                         name: req.body.name,

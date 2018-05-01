@@ -25,7 +25,6 @@ async function execute(query) {
     }
 }
 
-
 async function selectOne(query) {
     const client = await pool.connect();
     try {
@@ -78,4 +77,4 @@ async function executeInTransaction(callback) {
 }
 
 
-module.exports = { execute, executeInTransaction } 
+module.exports = { execute, selectOne, selectMany, executeInTransaction } 

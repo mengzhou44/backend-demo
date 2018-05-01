@@ -4,9 +4,10 @@ const bodyParser = require("body-parser");
 
 const { Pool, Client } = require('pg');
 
+const auth = require('./middleware/auth')();
 
 const app = express();
-
+app.use(auth.initialize());
 app.use(bodyParser.json());
 app.use(
     bodyParser.urlencoded({
@@ -15,6 +16,7 @@ app.use(
 );
 
 require("./routes/clients-routes")(app);
+require('./routes/auth-routes')(app);
 
 const PORT = process.env.PORT || 5000;
 

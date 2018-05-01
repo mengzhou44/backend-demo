@@ -5,6 +5,7 @@ const _ = require('lodash');
 const usersBL = require('../business-logic/users-bl');
 const keys = require('../config/keys');
 
+
 var params = {
     secretOrKey: keys.jwtSecret,
     jwtFromRequest: passportJWT.ExtractJwt.fromAuthHeaderAsBearerToken()
@@ -20,8 +21,9 @@ module.exports = function () {
         } else {
             return done(new Error('User not found'), null);
         }
+
     });
-    passport.use(strategy);
+
     return {
         initialize: function () {
             return passport.initialize();
