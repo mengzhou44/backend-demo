@@ -1,10 +1,10 @@
-const express = require("express");
-const bodyParser = require("body-parser");
+const express = require('express');
+const bodyParser = require('body-parser');
 
+
+const auth = require('./auth/auth')();
 
 const { Pool, Client } = require('pg');
-
-const auth = require('./middleware/auth')();
 
 const app = express();
 app.use(auth.initialize());
@@ -15,14 +15,14 @@ app.use(
     })
 );
 
-require("./routes/clients-routes")(app);
+require('./routes/clients-routes')(app);
 require('./routes/auth-routes')(app);
 
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, error => {
     if (error) throw error;
-    console.log("Server running on port: " + PORT);
+    console.log('Server running on port: ' + PORT);
 });
 
 module.exports = { app };

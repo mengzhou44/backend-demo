@@ -1,10 +1,10 @@
 const _ = require('lodash');
 const clientsBL = require('../business-logic/clients-bl');
-const requireAuth = require('../middleware/require-auth');
+const requireAuth = require('../auth/require-auth');
+
 
 module.exports = (app) => {
-    app.get("/clients", requireAuth(), (req, res) => {
-        console.log('step1');
+    app.get("/clients", requireAuth, (req, res) => {
         clientsBL.getAllClients().then(result => {
             res.status(200).send(result);
         });
@@ -45,8 +45,7 @@ module.exports = (app) => {
         clientsBL.removeClient(id).then((result) => {
             res.status(200).send({ success: true, id });
         }).catch(err => {
-            console.log('remove failed!');
-            console.log(err);
+
             res.status(400).send("Not able to delete client.");
         })
     });

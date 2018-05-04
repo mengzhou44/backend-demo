@@ -2,6 +2,7 @@ const expect = require("expect");
 const request = require("supertest");
 const db = require("../db");
 const clientsBL = require('../business-logic/clients-bl');
+const requireAuth = require('../auth/require-auth');
 
 const { app } = require('../server');
 
